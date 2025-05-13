@@ -1,50 +1,74 @@
-# Welcome to your Expo app 👋
+# whatIsaw 🚀
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Welcome to **whatIsaw**, an Expo + React Native project powered by Expo Router and TypeScript.
 
-## Get started
+## 🛠️ Setup
 
-1. Install dependencies
+1. **Install dependencies**
 
    ```bash
    npm install
+   # or
+   yarn install
    ```
 
-2. Start the app
+2. **Start the development server**
 
    ```bash
-   npx expo start
+   npm start
+   # or
+   yarn start
    ```
 
-In the output, you'll find options to open the app in a
+   Options in the terminal:
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+   - **Android emulator** (`a`)
+   - **iOS simulator** (`i`)
+   - **Web** (`w`)
+   - **Expo Go** (scan the QR code)
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+3. **Run on a device**
 
-## Get a fresh project
+   - **Android**: `npm run android` / `yarn android`
+   - **iOS**: `npm run ios` / `yarn ios`
+   - **Web**: `npm run web` / `yarn web`
 
-When you're ready, run:
+## 📂 Project structure
 
-```bash
-npm run reset-project
-```
+- **app/** — Your app’s entrypoints and file-based routes
+- **components/** — Reusable React Native components
+- **constants/** — App-wide constants
+- **hooks/** — Custom React hooks
+- **assets/** — Images, fonts, icons, etc.
+- **scripts/** — Automation scripts (e.g., custom reset)
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+## ⚙️ Scripts
 
-## Learn more
+| Script                | Description                                        |
+| --------------------- | -------------------------------------------------- |
+| `npm start`           | Start Expo development server                     |
+| `npm run android`     | Open on Android emulator/device                   |
+| `npm run ios`         | Open on iOS simulator/device                      |
+| `npm run web`         | Open in web browser                               |
+| `npm run lint`        | Run ESLint checks (`expo lint`)                   |
+| `npm run format`      | Format code with Prettier                         |
+| `npm run prepare`     | Install Husky Git hooks                           |
 
-To learn more about developing your project with Expo, look at the following resources:
+## ✨ Technologies
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+- [Expo SDK](https://expo.dev) (SDK 53)
+- [Expo Router](https://expo.github.io/router/) for file-based routing
+- React Native 0.79
+- TypeScript
+- ESLint + Prettier + Husky + lint-staged for code quality
+- React Navigation for screens
 
-## Join the community
+## 📖 Learn More
 
-Join our community of developers creating universal apps.
+- **Expo docs**: https://docs.expo.dev
+- **React Native docs**: https://reactnative.dev/docs/getting-started
+- **Expo Router guide**: https://docs.expo.dev/router/introduction
+- **TypeScript support**: https://docs.expo.dev/guides/typescript
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+Happy coding! 🎉
+
