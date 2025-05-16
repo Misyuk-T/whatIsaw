@@ -14,7 +14,10 @@ const PostCard = ({ post }: { post: Post }) => {
       <Card.Actions>
         <Button
           onPress={() =>
-            router.push({ pathname: '/map', params: { postId: post.id } })
+            router.push({
+              pathname: '/(tabs)/map',
+              params: { postId: post.id }
+            })
           }
         >
           Show on Map
