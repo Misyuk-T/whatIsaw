@@ -1,27 +1,57 @@
+
 import { useEffect, useState } from 'react';
 import { ActivityIndicator, Image, StyleSheet, Text, View } from 'react-native';
 import { Button, Card } from 'react-native-paper';
 import { useLocalSearchParams } from 'expo-router';
+import MapView, { Marker, Region } from 'react-native-maps';
 
 import { useLocation } from '@/stores';
 import { usePostsStore } from '@/stores';
+import { Post } from '@/models/post';
+import MapMarker from '@/components/MapMarker';
 
 const MapRoute = () => {
   const { postId } = useLocalSearchParams<{ postId: string }>();
   const { posts } = usePostsStore();
   const { location, isLoading } = useLocation();
-  const [selectedPost, setSelectedPost] = useState(
-    postId ? posts.find((p) => p.id.toString() === postId) : null
+  const [selectedPost, setSelectedPost] = useState<Post | null>(
+    postId ? posts.find((p) => p.id.toString() === postId) || null : null
   );
+  const [region, setRegion] = useState<Region>({
+    latitude: location.lat,
+    longitude: location.lng,
+    latitudeDelta: 0.01,
+    longitudeDelta: 0.01,
+  });
 
   useEffect(() => {
     if (postId) {
       const post = posts.find((p) => p.id.toString() === postId);
       if (post) {
         setSelectedPost(post);
+        // Center map on selected post
+        setRegion({
+          latitude: post.lat,
+          longitude: post.lng,
+          latitudeDelta: 0.01,
+          longitudeDelta: 0.01,
+        });
       }
     }
   }, [postId, posts]);
+
+  useEffect(() => {
+    // Update region when location changes
+    setRegion(prev => ({
+      ...prev,
+      latitude: location.lat,
+      longitude: location.lng,
+    }));
+  }, [location]);
+
+  const handleMarkerPress = (post: Post) => {
+    setSelectedPost(post);
+  };
 
   return (
     <View style={styles.container}>
@@ -29,17 +59,32 @@ const MapRoute = () => {
         {isLoading ? (
           <ActivityIndicator size='large' style={styles.loader} />
         ) : (
-          <>
-            <Text style={styles.mapPlaceholder}>Map Placeholder</Text>
-            <Text style={styles.mapInfo}>
-              Your location: {location.lat.toFixed(6)},{' '}
-              {location.lng.toFixed(6)}
-            </Text>
-            <Text style={styles.mapInfo}>Posts on map: {posts.length}</Text>
-            <Text style={styles.mapNote}>
-              Note: react-native-maps will be implemented in the future.
-            </Text>
-          </>
+          <MapView
+            style={styles.map}
+            region={region}
+            onRegionChangeComplete={setRegion}
+            showsUserLocation={true}
+            showsMyLocationButton={true}
+          >
+            {/* User's current location marker */}
+            <Marker
+              coordinate={{
+                latitude: location.lat,
+                longitude: location.lng,
+              }}
+              title="Your Location"
+              pinColor="blue"
+            />
+
+            {/* Post markers */}
+            {posts.map((post) => (
+              <MapMarker
+                key={post.id}
+                post={post}
+                onPress={handleMarkerPress}
+              />
+            ))}
+          </MapView>
         )}
       </View>
 
@@ -75,26 +120,14 @@ const styles = StyleSheet.create({
   },
   mapContainer: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#f0f0f0'
   },
-  mapPlaceholder: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    marginBottom: 16
-  },
-  mapInfo: {
-    marginBottom: 8
-  },
-  mapNote: {
-    marginTop: 16,
-    opacity: 0.7,
-    textAlign: 'center',
-    paddingHorizontal: 32
+  map: {
+    flex: 1,
   },
   loader: {
-    marginVertical: 20
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   postCard: {
     position: 'absolute',
