@@ -1,10 +1,10 @@
 import { FlatList, Text, View } from 'react-native';
 
 import PostCard from '@/components/PostCard';
-import { usePosts } from '@/hooks/usePosts';
+import { usePostsStore } from '@/stores';
 
 const FeedRoute = () => {
-  const { posts } = usePosts();
+  const { posts } = usePostsStore();
 
   if (!posts.length)
     return (
