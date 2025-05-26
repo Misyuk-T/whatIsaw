@@ -3,12 +3,12 @@ import { ActivityIndicator, Image, StyleSheet, Text, View } from 'react-native';
 import { Button, Card } from 'react-native-paper';
 import { useLocalSearchParams } from 'expo-router';
 
-import { useLocation } from '@/hooks/useLocation';
-import { usePosts } from '@/hooks/usePosts';
+import { useLocation } from '@/stores';
+import { usePostsStore } from '@/stores';
 
 const MapRoute = () => {
   const { postId } = useLocalSearchParams<{ postId: string }>();
-  const { posts } = usePosts();
+  const { posts } = usePostsStore();
   const { location, isLoading } = useLocation();
   const [selectedPost, setSelectedPost] = useState(
     postId ? posts.find((p) => p.id.toString() === postId) : null

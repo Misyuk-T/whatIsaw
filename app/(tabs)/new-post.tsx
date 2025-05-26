@@ -13,7 +13,7 @@ const NewPostRoute = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { location, isLoading, errorMsg, showLocationPermissionAlert } =
     useLocation();
-  const { posts, addPost } = usePosts();
+  const { addPost } = usePostsStore();
 
   const pickImage = async () => {
     try {
