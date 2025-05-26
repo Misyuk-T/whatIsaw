@@ -1,12 +1,11 @@
 import { StyleSheet, View } from 'react-native';
 import { Button, Card, Text } from 'react-native-paper';
 
-import { useAuth } from '@/hooks/useAuth';
-import { usePosts } from '@/hooks/usePosts';
+import { useAuthStore, usePostsStore } from '@/stores';
 
 const ProfileRoute = () => {
-  const { user, signOut } = useAuth();
-  const { posts } = usePosts();
+  const { user, signOut } = useAuthStore();
+  const { posts } = usePostsStore();
   const userPosts = posts;
 
   return (

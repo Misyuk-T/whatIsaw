@@ -2,13 +2,13 @@ import { useEffect, useState } from 'react';
 import { Slot, Stack, useRouter, useSegments } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 
-import { useAuth } from '@/hooks/useAuth';
+import { useAuthStore } from '@/stores';
 
 SplashScreen.preventAutoHideAsync();
 
 const RootLayout = () => {
   const [appIsReady, setAppIsReady] = useState(false);
-  const { user, isLoading } = useAuth();
+  const { user, isLoading } = useAuthStore();
   const router = useRouter();
   const segments = useSegments();
 

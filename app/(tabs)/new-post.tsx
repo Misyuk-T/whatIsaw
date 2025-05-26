@@ -3,8 +3,8 @@ import { ActivityIndicator, Image, StyleSheet, View } from 'react-native';
 import { Button, Text, TextInput } from 'react-native-paper';
 import * as ImagePicker from 'expo-image-picker';
 
-import { useLocation } from '@/hooks/useLocation';
-import { usePosts } from '@/hooks/usePosts';
+import { useLocation } from '@/stores';
+import { usePostsStore } from '@/stores';
 import { Post } from '@/models/post';
 
 const NewPostRoute = () => {

@@ -1,60 +1,31 @@
-import { useState } from 'react';
-import { ActivityIndicator, StyleSheet, View } from 'react-native';
-import { Button, Text } from 'react-native-paper';
+import { StyleSheet, View } from 'react-native';
+import { Button, Card, Text } from 'react-native-paper';
 
-import { useAuth } from '@/hooks/useAuth';
+import { useAuthStore } from '@/stores';
 
-const AuthRoute = () => {
-  const { signInWithGoogle, signInAnonymously } = useAuth();
-  const [isSigningIn, setIsSigningIn] = useState(false);
-
-  const handleGoogleSignIn = async () => {
-    setIsSigningIn(true);
-    try {
-      await signInWithGoogle();
-    } finally {
-      setIsSigningIn(false);
-    }
-  };
-
-  const handleAnonymousSignIn = async () => {
-    setIsSigningIn(true);
-    try {
-      await signInAnonymously();
-    } finally {
-      setIsSigningIn(false);
-    }
-  };
+const AuthScreen = () => {
+  const { signInWithGoogle, signInAnonymously } = useAuthStore();
 
   return (
     <View style={styles.container}>
-      <Text variant='headlineMedium' style={styles.title}>
-        What I Saw
-      </Text>
-      <Text variant='bodyLarge' style={styles.subtitle}>
-        Share what you see with the world
-      </Text>
-
-      {isSigningIn ? (
-        <ActivityIndicator size='large' style={styles.loader} />
-      ) : (
-        <View>
-          <Button
-            mode='contained'
-            onPress={handleGoogleSignIn}
-            style={styles.button}
-          >
+      <Card style={styles.card}>
+        <Card.Content>
+          <Text variant='headlineMedium' style={styles.title}>
+            Welcome to WhatISaw
+          </Text>
+          <Text variant='bodyMedium' style={styles.subtitle}>
+            Share and discover what others have seen around you
+          </Text>
+        </Card.Content>
+        <Card.Actions style={styles.actions}>
+          <Button mode='contained' onPress={signInWithGoogle} style={styles.button}>
             Sign in with Google
           </Button>
-          <Button
-            mode='outlined'
-            onPress={handleAnonymousSignIn}
-            style={styles.button}
-          >
+          <Button mode='outlined' onPress={signInAnonymously} style={styles.button}>
             Continue as Guest
           </Button>
-        </View>
-      )}
+        </Card.Actions>
+      </Card>
     </View>
   );
 };
@@ -63,26 +34,27 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center',
-    padding: 20
+    padding: 16
+  },
+  card: {
+    marginHorizontal: 16
   },
   title: {
-    marginBottom: 8,
-    textAlign: 'center'
+    textAlign: 'center',
+    marginBottom: 8
   },
   subtitle: {
-    marginBottom: 32,
     textAlign: 'center',
-    opacity: 0.7
+    marginBottom: 16
+  },
+  actions: {
+    flexDirection: 'column',
+    gap: 8,
+    padding: 16
   },
   button: {
-    marginBottom: 12,
-    width: '100%',
-    maxWidth: 300
-  },
-  loader: {
-    marginVertical: 20
+    width: '100%'
   }
 });
 
-export default AuthRoute;
+export default AuthScreen;
